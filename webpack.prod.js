@@ -57,8 +57,12 @@ module.exports = merge(common, {
     new PurgecssPlugin({
       paths: glob.sync(`${PATHS.src}/**/*`, { nodir: true }),
     }),
+    // Crée un serveur avec une url (http://127.0.0.1:8888) où
+    // l'on peut voir le poids des différents fichiers générés dans l'output
     new BundleAnalyzerPlugin({
+      // La page du navigateur ne s'ouvre pas automatiquement après la compilation
       openAnalyzer: false,
+      // On affiche les poids en gzippés
       defaultSizes: "gzip",
     }),
   ],
