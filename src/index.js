@@ -1,3 +1,8 @@
+/* 
+    Ici c'est le point d'entrée de notre application
+    on importe nos script js, nos styles scss ou css
+    et on démarre l'application
+*/
 import { run } from "./app/app";
 import "./main.scss";
 import { AlertService } from "./app/alert.service";

@@ -1,3 +1,8 @@
+/*
+    Ici on importe nos styles scss 
+    et on surcharge les variable scss de bootstrap
+*/
 $primary: teal;
 $danger: purple;
+// Le ~ permet d'accéder à node_module
 @import "~bootstrap/scss/bootstrap";
