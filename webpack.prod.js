@@ -8,6 +8,9 @@ const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const PurgecssPlugin = require("purgecss-webpack-plugin");
+const { gzip } = require("zlib");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+  .BundleAnalyzerPlugin;
 
 // On déclare un objet PATHS avec différents chemins
 const PATHS = {
@@ -53,6 +56,10 @@ module.exports = merge(common, {
     new CleanWebpackPlugin(),
     new PurgecssPlugin({
       paths: glob.sync(`${PATHS.src}/**/*`, { nodir: true }),
+    }),
+    new BundleAnalyzerPlugin({
+      openAnalyzer: false,
+      defaultSizes: "gzip",
     }),
   ],
   module: {
