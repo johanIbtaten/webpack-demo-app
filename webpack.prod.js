@@ -1,4 +1,5 @@
 const path = require("path");
+const glob = require("glob");
 const common = require("./webpack.common");
 const { merge } = require("webpack-merge");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
@@ -6,13 +7,20 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const PurgecssPlugin = require("purgecss-webpack-plugin");
+
+// On déclare un objet PATHS avec différents chemins
+const PATHS = {
+  src: path.join(__dirname, "src"),
+  dist: path.join(__dirname, "dist"),
+};
 
 module.exports = merge(common, {
   mode: "production",
   output: {
     // Permet de générer un bundle js avec un hash pour le cache busting
     filename: "[name].[contentHash].bundle.js",
-    path: path.resolve(__dirname, "dist"),
+    path: PATHS.dist,
   },
   optimization: {
     /* 
@@ -43,6 +51,9 @@ module.exports = merge(common, {
     new MiniCssExtractPlugin({ filename: "[name].[contentHash].css" }),
     // Permet de supprimer le dossier output avant de faire un nouveau build
     new CleanWebpackPlugin(),
+    new PurgecssPlugin({
+      paths: glob.sync(`${PATHS.src}/**/*`, { nodir: true }),
+    }),
   ],
   module: {
     rules: [
